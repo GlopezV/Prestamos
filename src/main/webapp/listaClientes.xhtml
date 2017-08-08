@@ -1,0 +1,193 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+         
+        <ui:composition template="./plantilla/TemplatePrestamos.xhtml">
+
+            <ui:define name="content">
+                
+                <h:form id="frmListaClientes">
+                    <p:growl id="growlstCliente" showDetail="true"/>
+                    <p:commandButton value="Nuevo" icon="ui-icon-plusthick" onclick ="PF('wdlgCli').show();" 
+                                     actionListener="#{clientController.nuevoCliente()}" 
+                                     update="frmDialogoCliente"/>
+                    <p:commandButton value="Buscar" icon="ui-icon-search" onclick="PF ('wdlgCliBuscar').show();"/>
+                        <h:panelGrid columns="2" id="pgridlstCliente">
+                            <p:dataTable id="dtclientes" value="#{clientController.listaCliente}" var="cliente" resizeMode="true"
+                                     rows="20"
+                                     paginator="true"
+                                     paginatorPosition="bottom"
+                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} 
+                                     {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                     emptyMessage="Ningun Registro de Clientes">
+                                <f:facet name="header">
+                                    Listado de Clientes
+                                </f:facet>
+                                <p:column headerText="Id" resizable="true" width="10">
+                                     <h:outputText value="#{cliente.idCliente}"/>
+                                </p:column>
+                                <p:column headerText="Nombres" resizable="true" width="50">
+                                    <h:outputText value="#{cliente.nombres} , #{cliente.apellidos}"/>
+                                </p:column>
+                                <p:column headerText="DUI" width="30">
+                                    <h:outputText value="#{cliente.dui}"/>
+                                </p:column>
+                                <p:column headerText="Telefono Movil" width="30">
+                                    <h:outputText value="#{cliente.telefonoMobil}"/>
+                                </p:column>
+                                <p:column headerText="Telefono Fijo" width="30">
+                                     <h:outputText value="#{cliente.telefonoFijo}"/>
+                                </p:column>
+                                <p:column headerText="Estado" width="10" style="width: 5px;text-align: center">
+                                    <p:selectBooleanCheckbox value="#{cliente.activo}" disabled="true"/>
+                                </p:column>
+                                <p:column style="width: 5px;text-align: center" headerText="Editar">
+                                    <p:commandButton oncomplete ="PF('wdlgCli').show();" icon="ui-icon-pencil" 
+                                                     title="Editar Cliente" update="@form :dialogoEditarCliente" 
+                                                     actionListener="#{clientController.SeleccionCliente(cliente)}"/>
+                                </p:column>
+                                <p:column style="width: 5px;text-align: center" headerText="Eliminar">
+                                     <p:commandButton icon="ui-icon-trash" title="Eliminar Cliente" 
+                                                      actionListener="#{clientController.EliminarCliente(cliente)}" 
+                                                      update=":frmListaClientes">
+                                        <p:confirm header="Confirmation" message="Esta Seguro de Eliminar al Cliente ?" icon="ui-icon-alert"/>
+                                    </p:commandButton>
+                                </p:column>
+                            </p:dataTable>
+                        </h:panelGrid>
+                    
+                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                            <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                        </p:confirmDialog>
+                </h:form>
+                
+                <p:dialog id="dialogoBuscarCliente" widgetVar="wdlgCliBuscar"  
+                          modal="true" resizable="false" closeOnEscape="true" position="center" draggable="false">
+                    <h:form id="frmDialogoBuscarCliente">
+                        <p:fieldset legend="Busqueda de Cliente">
+                        <h:panelGrid columns="3" id="gridClienteBuscar">
+                             <p:outputLabel value="Buscar Por:"/>
+                             <p:selectOneMenu id="cboTipoBusqueda" value="#{clientController.opcionBusqueda}">
+                                <f:selectItem itemLabel="Select One" itemValue="" />
+                                <f:selectItem itemLabel="Codigo" itemValue="C"/>
+                                <f:selectItem itemLabel="Nombres y Apellidos" itemValue="N"/>
+                                <f:selectItem itemLabel="Dui" itemValue="D"/>
+                             </p:selectOneMenu>
+                             <h:column/>
+                             <p:outputLabel value="Codigo de Cliente:"/>
+                             <p:inputText value="#{clientController.idCliente}"/>
+                              <h:column/>
+                             <p:outputLabel value="Nombre de Cliente:"/>
+                             <p:inputText value="#{clientController.nombres}"/>
+                              <h:column/>
+                              <p:outputLabel value="Apellidos de Cliente:"/>
+                              <p:inputText value="#{clientController.apellidos}"/>
+                              <h:column/>
+                             <p:outputLabel value="DUI :"/>
+                             <p:inputText value="#{clientController.dui}"/>
+                             <h:column/>
+                             <h:column/>
+                             <h:column>
+                                 <p:commandButton value="Buscar" icon="ui-icon-search" 
+                                                  actionListener="#{clientController.listaClienteByOpciones()}" 
+                                                  update="frmListaClientes:dtclientes" 
+                                                  oncomplete="PF('wdlgCliBuscar').hide();"
+                                                  ajax="false"/>
+                                 <p:commandButton value="Salir" 
+                                                  icon="ui-icon-close" immediate="true" style="background-color: brown"
+                                                  onclick="PF('wdlgCliBuscar').hide();"/>
+                             </h:column>
+                        </h:panelGrid>
+                        </p:fieldset>
+                    </h:form>      
+                </p:dialog>
+                
+                <p:dialog id="dialogoEditarCliente" widgetVar="wdlgCli"  
+                              modal="true" resizable="false" closeOnEscape="true" position="center" draggable="false">
+                    <h:form id="frmDialogoCliente">
+                        <p:fieldset legend="#{clientController.header}">
+                          <h:panelGrid columns="3" id="gridCliente">
+                             <p:outputLabel for="txtid" value="Codigo Cliente"/>
+                             <p:inputText id="txtid" value="#{clientController.cliente.idCliente}" required="false" readonly="true"/>
+                             <p:message for="txtid"/>
+                             <p:outputLabel for="txtNombres" value="Nombres"/>
+                             <p:inputText id="txtNombres" value="#{clientController.cliente.nombres}" required="true" 
+                                         requiredMessage="Nombres requeridos" />
+                             <p:message for="txtNombres"/>
+                             <p:outputLabel for="txtApellidos" value="Apellidos"/>
+                             <p:inputText id="txtApellidos" value="#{clientController.cliente.apellidos}" required="true" 
+                                         requiredMessage="Apellidos requeridos" />
+                             <p:message for="txtApellidos"/>
+                             <p:outputLabel for="rdSexo" value="sexo"/>
+                             <p:selectOneRadio value="#{clientController.cliente.sexo}" id="rdSexo" required="true" 
+                                              requiredMessage="Sexo requerido">
+                                <f:selectItem itemValue="M" itemLabel="Masculino"/>
+                                <f:selectItem itemValue="F" itemLabel="Femenino"/>
+                             </p:selectOneRadio>
+                             <p:message for="rdSexo"/>
+                             <p:outputLabel for="txtfecha" value="Fecha Nacimiento:"/>
+                             <p:calendar id="txtfecha" locale="es" pattern="dd/MM/yyyy" required="false" value="#{clientController.cliente.fechaNacimiento}" />
+                              <p:message for="txtfecha"/>
+                             <p:outputLabel for="txtNit" value="NIT"/>
+                             <p:inputMask id="txtNit" mask="9999-999999-999-9" value="#{clientController.cliente.nit}" required="false" converter="numberConvert"/>
+                              <p:message for="txtNit"/>
+                             <p:outputLabel for="txtDui" value="DUI"/>
+                             <p:inputMask id="txtDui" mask="99999999-9" value="#{clientController.cliente.dui}" required="true" 
+                                         requiredMessage="DUI requerido" converter="numberConvert"/>
+                             <p:message for="txtDui"/>
+                             <p:outputLabel for="txtmovil" value="Telefono Movil"/>
+                             <p:inputMask id="txtmovil" mask="9999-9999" value="#{clientController.cliente.telefonoMobil}" required="false" converter="numberConvert"/>
+                             <p:message for="txtmovil"/>
+                             <p:outputLabel for="txtFijo" value="Telefono Fijo"/>
+                             <p:inputMask id="txtFijo" mask="9999-9999" value="#{clientController.cliente.telefonoFijo}" required="false" converter="numberConvert"/>
+                             <p:message for="txtFijo"/>
+                             <p:outputLabel for="txtDireccion" value="Direccion"/> 
+                             <h:column>
+                                <p:inputTextarea id="txtDireccion" 
+                                                 value="#{clientController.cliente.direccion}" rows="5" cols="50" counter="display" 
+                                                 maxlength="300" counterTemplate=" {0} Caracteres restantes" 
+                                                 autoResize="false" required="true" 
+                                                 requiredMessage="Direccion requerida"/>
+                                <h:outputText id="display" />
+                             </h:column>
+                             <p:message for="txtDireccion"/>
+                             <p:outputLabel for="rdEstado" value="Estado"/>
+                             <p:selectOneRadio value="#{clientController.cliente.activo}" id="rdEstado" required="true" 
+                                              requiredMessage="Estado requerido">
+                                <f:selectItem itemValue="true" itemLabel="Activo"/>
+                                <f:selectItem itemValue="false" itemLabel="Inactivo"/>
+                             </p:selectOneRadio>
+                             <p:message for="rdEstado"/>
+                             <h:column/>
+                             <h:column>
+                                 <p:commandButton value="Registrar" icon="ui-icon-check"  
+                                              actionListener="#{clientController.createCliente()}" 
+                                              oncomplete="if (!args.validationFailed) PF('wdlgCli').hide()"
+                                              rendered="#{clientController.accion=='N'}"
+                                              update="frmListaClientes:dtclientes,:frmDialogoCliente"/>
+                                <p:commandButton value="Modificar" icon="ui-icon-check"  
+                                                 actionListener="#{clientController.editarCliente()}" 
+                                                 ajax="false" 
+                                                 oncomplete="PF('wdlgCli').hide();"
+                                                 update="frmListaClientes:dtclientes" 
+                                                 rendered="#{clientController.accion=='M'}"/>
+                                <p:commandButton value="Salir" icon="ui-icon-close" immediate="true" 
+                                                 onclick="PF('wdlgCli').hide();"/>
+                             </h:column>
+                          </h:panelGrid>
+                        </p:fieldset>
+                    </h:form>
+                </p:dialog>
+            </ui:define>
+
+        </ui:composition>
+    </body>
+</html>
