@@ -15,10 +15,10 @@
                 
                 <h:form id="frmListaClientes">
                     <p:growl id="growlstCliente" showDetail="true"/>
-                    <p:commandButton value="Nuevo" icon="ui-icon-plusthick" onclick ="PF('wdlgCli').show();" 
+                    <p:commandButton icon="ui-icon-plusthick" onclick ="PF('wdlgCli').show();" 
                                      actionListener="#{clientController.nuevoCliente()}" 
                                      update="frmDialogoCliente"/>
-                    <p:commandButton value="Buscar" icon="ui-icon-search" onclick="PF ('wdlgCliBuscar').show();"/>
+                    <p:commandButton icon="ui-icon-search" onclick="PF ('wdlgCliBuscar').show();"/>
                         <h:panelGrid columns="2" id="pgridlstCliente">
                             <p:dataTable id="dtclientes" value="#{clientController.listaCliente}" var="cliente" resizeMode="true"
                                      rows="20"
