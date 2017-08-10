@@ -33,7 +33,7 @@ public class ClientController implements Serializable{
     
     @PostConstruct
     public void init(){
-          ListarClientesTop();
+          listarClientesTop();
           
       }
       
@@ -119,7 +119,7 @@ public class ClientController implements Serializable{
     public void createCliente(){
         try {
             if(clienteBs.crear(cliente).equals("Exitoso")){
-                ListarClientesTop();
+                listarClientesTop();
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Se registro Exitosamente"));
             }
         } catch (Exception e) {
@@ -140,7 +140,7 @@ public class ClientController implements Serializable{
     public void EliminarCliente(prClientes clienteEliminar){
         try {
             if(clienteBs.remover(clienteEliminar).equals("Exitoso")){
-                ListarClientesTop();
+                listarClientesTop();
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Se Elimino Exitosamente"));
             }
         } catch (Exception e) {
@@ -168,7 +168,7 @@ public class ClientController implements Serializable{
          }
      }
     
-    public void ListarClientesTop(){
+    public void listarClientesTop(){
          try {
            listaCliente= clienteBs.findByClientesTop();
          } catch (Exception e) {
