@@ -40,15 +40,17 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "prPrestamos.findByFecha", query = "SELECT p FROM prPrestamos p WHERE p.fecha = :fecha"),
     @NamedQuery(name = "prPrestamos.findByMontoOtorgado", query = "SELECT p FROM prPrestamos p WHERE p.montoOtorgado = :montoOtorgado"),
     @NamedQuery(name = "prPrestamos.findByTipoPeriodo", query = "SELECT p FROM prPrestamos p WHERE p.tipoPeriodo = :tipoPeriodo"),
-    @NamedQuery(name = "prPrestamos.findByNumeroPeriodo", query = "SELECT p FROM prPrestamos p WHERE p.numeroPeriodo = :numeroPeriodo")})
+    @NamedQuery(name = "prPrestamos.findByPlazo", query = "SELECT p FROM prPrestamos p WHERE p.plazo = :plazo"),
+    @NamedQuery(name = "prPrestamos.findByMontoCuota", query = "SELECT p FROM prPrestamos p WHERE p.montoCuota = :montoCuota"),
+    @NamedQuery(name = "prPrestamos.findByUsuarioCreador", query = "SELECT p FROM prPrestamos p WHERE p.usuarioCreador = :usuarioCreador"),
+    @NamedQuery(name = "prPrestamos.findByFechaCreacion", query = "SELECT p FROM prPrestamos p WHERE p.fechaCreacion = :fechaCreacion"),
+    @NamedQuery(name = "prPrestamos.findByUsuarioModificador", query = "SELECT p FROM prPrestamos p WHERE p.usuarioModificador = :usuarioModificador"),
+    @NamedQuery(name = "prPrestamos.findByFechaModificacion", query = "SELECT p FROM prPrestamos p WHERE p.fechaModificacion = :fechaModificacion"),
+    @NamedQuery(name = "prPrestamos.findByUsuarioInactivador", query = "SELECT p FROM prPrestamos p WHERE p.usuarioInactivador = :usuarioInactivador"),
+    @NamedQuery(name = "prPrestamos.findByFechaInactivacion", query = "SELECT p FROM prPrestamos p WHERE p.fechaInactivacion = :fechaInactivacion"),
+    @NamedQuery(name = "prPrestamos.findByActivo", query = "SELECT p FROM prPrestamos p WHERE p.activo = :activo")})
 public class prPrestamos implements Serializable {
-    
-    @OneToMany(mappedBy = "Prestamo")
-    private List<prDetallePrestamos> ListaDetallePrestamos;
-    
-    @OneToMany(mappedBy = "Prestamo")
-    private List<prTransaccionesPrestamos> ListaTransaccionesPrestamos;
-    
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -56,30 +58,48 @@ public class prPrestamos implements Serializable {
     @Size(min = 1, max = 15)
     @Column(name = "id_prestamo")
     private String idPrestamo;
-    
     @Column(name = "fecha")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date fecha;
-    
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "monto_otorgado")
     private BigDecimal montoOtorgado;
-    
     @Size(max = 10)
     @Column(name = "tipo_periodo")
     private String tipoPeriodo;
-    
-    @Column(name = "numero_periodo")
-    private Integer numeroPeriodo;
-    
-    @JoinColumn(name = "id_linea_prestamo", referencedColumnName = "id_linea_prestamo")
-    @ManyToOne
-    private prlineasPrestamos LineaPrestamo;
-    
-   
+    @Column(name = "plazo")
+    private Integer plazo;
+    @Column(name = "monto_cuota")
+    private BigDecimal montoCuota;
+    @Size(max = 30)
+    @Column(name = "usuario_creador")
+    private String usuarioCreador;
+    @Column(name = "fecha_creacion")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaCreacion;
+    @Size(max = 30)
+    @Column(name = "usuario_modificador")
+    private String usuarioModificador;
+    @Column(name = "fecha_modificacion")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaModificacion;
+    @Size(max = 30)
+    @Column(name = "usuario_inactivador")
+    private String usuarioInactivador;
+    @Column(name = "fecha_inactivacion")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaInactivacion;
+    @Column(name = "activo")
+    private Boolean activo;
+    @OneToMany(mappedBy = "idPrestamo")
+    private List<prDetallePrestamos> prDetallePrestamosList;
+    @OneToMany(mappedBy = "idPrestamo")
+    private List<prDistPrestamos> prDistPrestamosList;
+    @OneToMany(mappedBy = "idPrestamo")
+    private List<prTransaccionesPrestamos> prTransaccionesPrestamosList;
     @JoinColumn(name = "id_cliente", referencedColumnName = "id_cliente")
     @ManyToOne
-    private prClientes Cliente;
+    private prClientes idCliente;
 
     public prPrestamos() {
     }
@@ -120,28 +140,111 @@ public class prPrestamos implements Serializable {
         this.tipoPeriodo = tipoPeriodo;
     }
 
-    public Integer getNumeroPeriodo() {
-        return numeroPeriodo;
+    public Integer getPlazo() {
+        return plazo;
     }
 
-    public void setNumeroPeriodo(Integer numeroPeriodo) {
-        this.numeroPeriodo = numeroPeriodo;
+    public void setPlazo(Integer plazo) {
+        this.plazo = plazo;
     }
 
-    public prlineasPrestamos getIdLineaPrestamo() {
-        return LineaPrestamo;
+    public BigDecimal getMontoCuota() {
+        return montoCuota;
     }
 
-    public void setIdLineaPrestamo(prlineasPrestamos LineaPrestamo) {
-        this.LineaPrestamo = LineaPrestamo;
+    public void setMontoCuota(BigDecimal montoCuota) {
+        this.montoCuota = montoCuota;
+    }
+
+    public String getUsuarioCreador() {
+        return usuarioCreador;
+    }
+
+    public void setUsuarioCreador(String usuarioCreador) {
+        this.usuarioCreador = usuarioCreador;
+    }
+
+    public Date getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(Date fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
+
+    public String getUsuarioModificador() {
+        return usuarioModificador;
+    }
+
+    public void setUsuarioModificador(String usuarioModificador) {
+        this.usuarioModificador = usuarioModificador;
+    }
+
+    public Date getFechaModificacion() {
+        return fechaModificacion;
+    }
+
+    public void setFechaModificacion(Date fechaModificacion) {
+        this.fechaModificacion = fechaModificacion;
+    }
+
+    public String getUsuarioInactivador() {
+        return usuarioInactivador;
+    }
+
+    public void setUsuarioInactivador(String usuarioInactivador) {
+        this.usuarioInactivador = usuarioInactivador;
+    }
+
+    public Date getFechaInactivacion() {
+        return fechaInactivacion;
+    }
+
+    public void setFechaInactivacion(Date fechaInactivacion) {
+        this.fechaInactivacion = fechaInactivacion;
+    }
+
+    public Boolean getActivo() {
+        return activo;
+    }
+
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
+    }
+
+    @XmlTransient
+    public List<prDetallePrestamos> getPrDetallePrestamosList() {
+        return prDetallePrestamosList;
+    }
+
+    public void setPrDetallePrestamosList(List<prDetallePrestamos> prDetallePrestamosList) {
+        this.prDetallePrestamosList = prDetallePrestamosList;
+    }
+
+    @XmlTransient
+    public List<prDistPrestamos> getPrDistPrestamosList() {
+        return prDistPrestamosList;
+    }
+
+    public void setPrDistPrestamosList(List<prDistPrestamos> prDistPrestamosList) {
+        this.prDistPrestamosList = prDistPrestamosList;
+    }
+
+    @XmlTransient
+    public List<prTransaccionesPrestamos> getPrTransaccionesPrestamosList() {
+        return prTransaccionesPrestamosList;
+    }
+
+    public void setPrTransaccionesPrestamosList(List<prTransaccionesPrestamos> prTransaccionesPrestamosList) {
+        this.prTransaccionesPrestamosList = prTransaccionesPrestamosList;
     }
 
     public prClientes getIdCliente() {
-        return Cliente;
+        return idCliente;
     }
 
-    public void setIdCliente(prClientes Cliente) {
-        this.Cliente = Cliente;
+    public void setIdCliente(prClientes idCliente) {
+        this.idCliente = idCliente;
     }
 
     @Override
@@ -167,24 +270,6 @@ public class prPrestamos implements Serializable {
     @Override
     public String toString() {
         return "sv.com.prestamos.modelo.prPrestamos[ idPrestamo=" + idPrestamo + " ]";
-    }
-
-    @XmlTransient
-    public List<prDetallePrestamos> getPrDetallePrestamosList() {
-        return ListaDetallePrestamos;
-    }
-
-    public void setPrDetallePrestamosList(List<prDetallePrestamos> ListaDetallePrestamos) {
-        this.ListaDetallePrestamos = ListaDetallePrestamos;
-    }
-
-    @XmlTransient
-    public List<prTransaccionesPrestamos> getPrTransaccionesPrestamosList() {
-        return ListaTransaccionesPrestamos;
-    }
-
-    public void setPrTransaccionesPrestamosList(List<prTransaccionesPrestamos> ListaTransaccionesPrestamos) {
-        this.ListaTransaccionesPrestamos = ListaTransaccionesPrestamos;
     }
     
 }

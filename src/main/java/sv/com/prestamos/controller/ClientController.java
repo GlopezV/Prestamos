@@ -12,7 +12,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import sv.com.prestamos.bs.ClientesBs;
-import sv.com.prestamos.modelo.PrClientes;
+import sv.com.prestamos.modelo.prClientes;
 
 @Named
 @ViewScoped
@@ -21,8 +21,8 @@ public class ClientController implements Serializable{
     @EJB
     private ClientesBs clienteBs;
     @Inject
-    private PrClientes cliente;
-    private List<PrClientes> listaCliente;
+    private prClientes cliente;
+    private List<prClientes> listaCliente;
     private String nombres;
     private String apellidos;
     private String dui;
@@ -37,19 +37,19 @@ public class ClientController implements Serializable{
           
       }
       
-    public PrClientes getCliente() {
+    public prClientes getCliente() {
         return cliente;
     }
 
-    public void setCliente(PrClientes cliente) {
+    public void setCliente(prClientes cliente) {
         this.cliente = cliente;
     }
 
-    public List<PrClientes> getListaCliente() {
+    public List<prClientes> getListaCliente() {
         return listaCliente;
     }
 
-    public void setListaCliente(List<PrClientes> listaCliente) {
+    public void setListaCliente(List<prClientes> listaCliente) {
         this.listaCliente = listaCliente;
     }
 
@@ -137,7 +137,7 @@ public class ClientController implements Serializable{
         }  
     }
     
-    public void EliminarCliente(PrClientes clienteEliminar){
+    public void EliminarCliente(prClientes clienteEliminar){
         try {
             if(clienteBs.remover(clienteEliminar).equals("Exitoso")){
                 listarClientesTop();
@@ -148,14 +148,14 @@ public class ClientController implements Serializable{
         }  
     }
     
-    public void SeleccionCliente(PrClientes clienteSeleccionado){
+    public void SeleccionCliente(prClientes clienteSeleccionado){
         cliente=clienteSeleccionado;
         this.setAccion("M");
     }
     
     public void nuevoCliente(){
         //return cliente;
-        cliente=new PrClientes();
+        cliente=new prClientes();
          this.setAccion("N");
         //return "/clientes.prestamos";
     }
