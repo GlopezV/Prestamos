@@ -60,9 +60,6 @@ public class prUsuarios implements Serializable {
     @JoinColumn(name = "id_rol", referencedColumnName = "id_rol")
     @ManyToOne
     private prRoles Roles;
-    
-    @OneToMany(mappedBy = "Usuario")
-    private List<prLogTransacciones> ListaLogTransacciones;
 
     public prUsuarios() {
     }
@@ -109,15 +106,6 @@ public class prUsuarios implements Serializable {
 
     public void setIdRol(prRoles Roles) {
         this.Roles = Roles;
-    }
-
-    @XmlTransient
-    public List<prLogTransacciones> getPrLogTransaccionesList() {
-        return ListaLogTransacciones;
-    }
-
-    public void setPrLogTransaccionesList(List<prLogTransacciones> ListaLogTransacciones) {
-        this.ListaLogTransacciones = ListaLogTransacciones;
     }
 
     @Override

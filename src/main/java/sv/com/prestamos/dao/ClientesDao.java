@@ -7,7 +7,7 @@ package sv.com.prestamos.dao;
 
 import java.util.List;
 import javax.ejb.Local;
-import sv.com.prestamos.modelo.prClientes;
+import sv.com.prestamos.modelo.PrClientes;
 
 /**
  *
@@ -16,25 +16,25 @@ import sv.com.prestamos.modelo.prClientes;
 @Local
 public interface ClientesDao {
 
-    void create(prClientes prClientes);
+    void create(PrClientes prClientes);
 
-    void edit(prClientes prClientes);
+    void edit(PrClientes prClientes);
 
-    void remove(prClientes prClientes);
+    void remove(PrClientes prClientes);
 
-    prClientes find(Object id);
+    PrClientes find(Object id);
 
-    List<prClientes> findAll();
+    List<PrClientes> findAll();
 
-    List<prClientes> findRange(int[] range);
+    List<PrClientes> findRange(int[] range);
 
-    List<prClientes> findByNombreApellidos(String nombres,String apellidos);
+    List<PrClientes> findByNombreApellidos(String nombres,String apellidos);
     
-    List<prClientes> findByClientesTop();
+    List<PrClientes> findByClientesTop();
     
-    List<prClientes> findByCodigo(String idCliente);
+    List<PrClientes> findByCodigo(String idCliente);
     
-    List<prClientes> findByDui(String dui);
+    List<PrClientes> findByDui(String dui);
     
     int count();
     

@@ -9,7 +9,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import sv.com.prestamos.dao.ClientesDao;
-import sv.com.prestamos.modelo.prClientes;
+import sv.com.prestamos.modelo.PrClientes;
 import java.util.Calendar;
 
 /**
@@ -21,12 +21,12 @@ public class ClientesBsImp implements ClientesBs {
 
     @EJB
     private ClientesDao clienteDao; 
-    private List<prClientes> listaClientes;
+    private List<PrClientes> listaClientes;
     
     @Override
-    public String crear(prClientes prClientes) {
+    public String crear(PrClientes prClientes) {
         try {
-            prClientes.setFecha_creacion(Calendar.getInstance());
+            prClientes.setFechaCreacion(Calendar.getInstance());
             clienteDao.create(prClientes);
             return "Exitoso";
         } catch (Exception e) {
@@ -35,9 +35,9 @@ public class ClientesBsImp implements ClientesBs {
     }
 
     @Override
-    public String editar(prClientes prClientes) {
+    public String editar(PrClientes prClientes) {
           try {
-            prClientes.setFecha_modificacion(Calendar.getInstance());
+            prClientes.setFechaModificacion(Calendar.getInstance());
             clienteDao.edit(prClientes);
             return "Exitoso";
         } catch (Exception e) {
@@ -46,7 +46,7 @@ public class ClientesBsImp implements ClientesBs {
     }
 
     @Override
-    public String remover(prClientes prClientes) {
+    public String remover(PrClientes prClientes) {
           try {
             clienteDao.remove(prClientes);
             return "Exitoso";
@@ -56,7 +56,7 @@ public class ClientesBsImp implements ClientesBs {
     }
 
     @Override
-    public prClientes ListarById(Object id) {
+    public PrClientes ListarById(Object id) {
         try {
             return clienteDao.find(id);
         } catch (Exception e) {
@@ -66,7 +66,7 @@ public class ClientesBsImp implements ClientesBs {
     }
 
     @Override
-    public List<prClientes> Listar() {
+    public List<PrClientes> Listar() {
         try {
             listaClientes=clienteDao.findAll();
             return listaClientes;
@@ -85,7 +85,7 @@ public class ClientesBsImp implements ClientesBs {
     }
 
     @Override
-    public List<prClientes> findByNombreApellidos(String nombres, String apellidos) {
+    public List<PrClientes> findByNombreApellidos(String nombres, String apellidos) {
         try {
             listaClientes=clienteDao.findByNombreApellidos(nombres, apellidos);
             return listaClientes;
@@ -95,7 +95,7 @@ public class ClientesBsImp implements ClientesBs {
     }
 
     @Override
-    public List<prClientes> findByClientesTop() {
+    public List<PrClientes> findByClientesTop() {
          try {
             listaClientes=clienteDao.findByClientesTop();
             return listaClientes;
@@ -105,7 +105,7 @@ public class ClientesBsImp implements ClientesBs {
     }
 
     @Override
-    public List<prClientes> findByCodigo(String idCliente) {
+    public List<PrClientes> findByCodigo(String idCliente) {
         try {
             listaClientes=clienteDao.findByCodigo(idCliente);
             return listaClientes;
@@ -115,7 +115,7 @@ public class ClientesBsImp implements ClientesBs {
     }
 
     @Override
-    public List<prClientes> findByDui(String dui) {
+    public List<PrClientes> findByDui(String dui) {
         try {
             listaClientes=clienteDao.findByDui(dui);
             return listaClientes;

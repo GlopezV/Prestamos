@@ -15,11 +15,6 @@
                 
                 <h:form id="frmListaClientes">
                     <p:growl id="growlstCliente" showDetail="true"/>
-                    <p:commandButton icon="ui-icon-plusthick" onclick ="PF('wdlgCli').show();" 
-                                     actionListener="#{clientController.nuevoCliente()}" 
-                                     update="frmDialogoCliente" title="Nuevo Cliente"/>
-                    <p:commandButton icon="ui-icon-search" onclick="PF ('wdlgCliBuscar').show();" title="Buscar Cliente"/>
-                    <p:commandButton icon="ui-icon-refresh" title="Refrescar Lista Clientes" actionListener="#{clientController.listarClientesTop()}" update=":frmListaClientes" />
                         <h:panelGrid columns="2" id="pgridlstCliente">
                             <p:dataTable id="dtclientes" value="#{clientController.listaCliente}" var="cliente" resizeMode="true"
                                      rows="20"
@@ -29,7 +24,17 @@
                                      {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                      emptyMessage="Ningun Registro de Clientes">
                                 <f:facet name="header">
-                                    Listado de Clientes
+                                    Lista de Clientes
+                                    <div class="row" align="left">
+                                            <p:commandButton icon="ui-icon-plusthick" onclick ="PF('wdlgCli').show();" 
+                                                actionListener="#{clientController.nuevoCliente()}" 
+                                                update="frmDialogoCliente" title="Nuevo Cliente" />
+                                       <p:commandButton icon="ui-icon-search" onclick="PF ('wdlgCliBuscar').show();" 
+                                                     title="Buscar Cliente"/>
+                                    <p:commandButton icon="ui-icon-refresh" title="Refrescar Lista Clientes" 
+                                                     actionListener="#{clientController.listarClientesTop()}" 
+                                                     update=":frmListaClientes" /> 
+                                    </div>
                                 </f:facet>
                                 <p:column headerText="Id" resizable="true" width="10">
                                      <h:outputText value="#{cliente.idCliente}"/>

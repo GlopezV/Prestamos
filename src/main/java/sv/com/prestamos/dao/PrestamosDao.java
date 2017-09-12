@@ -7,7 +7,7 @@ package sv.com.prestamos.dao;
 
 import java.util.List;
 import javax.ejb.Local;
-import sv.com.prestamos.modelo.prPrestamos;
+import sv.com.prestamos.modelo.PrPrestamos;
 
 /**
  *
@@ -16,17 +16,17 @@ import sv.com.prestamos.modelo.prPrestamos;
 @Local
 public interface PrestamosDao {
 
-    void create(prPrestamos prPrestamos);
+    void create(PrPrestamos prPrestamos);
 
-    void edit(prPrestamos prPrestamos);
+    void edit(PrPrestamos prPrestamos);
 
-    void remove(prPrestamos prPrestamos);
+    void remove(PrPrestamos prPrestamos);
 
-    prPrestamos find(Object id);
+    PrPrestamos find(Object id);
 
-    List<prPrestamos> findAll();
+    List<PrPrestamos> findAll();
 
-    List<prPrestamos> findRange(int[] range);
+    List<PrPrestamos> findRange(int[] range);
 
     int count();
     

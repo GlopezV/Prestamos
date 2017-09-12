@@ -7,7 +7,7 @@ package sv.com.prestamos.bs;
 
 import java.util.List;
 import javax.ejb.Local;
-import sv.com.prestamos.modelo.prClientes;
+import sv.com.prestamos.modelo.PrClientes;
 
 /**
  *
@@ -16,23 +16,23 @@ import sv.com.prestamos.modelo.prClientes;
 @Local
 public interface ClientesBs {
     
-    String crear(prClientes prClientes);
+    String crear(PrClientes prClientes);
 
-    String editar(prClientes prClientes);
+    String editar(PrClientes prClientes);
 
-    String remover(prClientes prClientes);
+    String remover(PrClientes prClientes);
 
-    prClientes ListarById(Object id);
+    PrClientes ListarById(Object id);
 
-    List<prClientes> Listar();
+    List<PrClientes> Listar();
 
-    List<prClientes> findByNombreApellidos(String nombres,String apellidos);
+    List<PrClientes> findByNombreApellidos(String nombres,String apellidos);
     
-    List<prClientes> findByClientesTop();
+    List<PrClientes> findByClientesTop();
     
-    List<prClientes> findByCodigo(String idCliente);
+    List<PrClientes> findByCodigo(String idCliente);
     
-    List<prClientes> findByDui(String dui);
+    List<PrClientes> findByDui(String dui);
     
     int Contar();
 }

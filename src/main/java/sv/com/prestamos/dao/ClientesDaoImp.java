@@ -10,14 +10,14 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import sv.com.prestamos.modelo.prClientes;
+import sv.com.prestamos.modelo.PrClientes;
 
 /**
  *
  * @author egalvez
  */
 @Stateless
-public class ClientesDaoImp extends AbstractDao<prClientes> implements ClientesDao {
+public class ClientesDaoImp extends AbstractDao<PrClientes> implements ClientesDao {
     @PersistenceContext(unitName = "PrestamosPU")
     private EntityManager em;
 
@@ -27,44 +27,44 @@ public class ClientesDaoImp extends AbstractDao<prClientes> implements ClientesD
     }
 
     public ClientesDaoImp() {
-        super(prClientes.class);
+        super(PrClientes.class);
     }
 
   @Override
-    public List<prClientes> findByNombreApellidos(String nombres, String apellidos) {
-        String queryStr="SELECT p FROM prClientes p WHERE "
+    public List<PrClientes> findByNombreApellidos(String nombres, String apellidos) {
+        String queryStr="SELECT p FROM PrClientes p WHERE "
                 + "UPPER(p.nombres) LIKE :cnombres or UPPER(p.apellidos) LIKE :capellidos";
         Query query= em.createQuery(queryStr);
         query.setParameter("cnombres", "%"+nombres.toUpperCase()+"%");
         query.setParameter("capellidos", "%"+apellidos.toUpperCase()+"%");
-        List<prClientes> lst=query.getResultList();
+        List<PrClientes> lst=query.getResultList();
                 /*setParameter(1, nombres).
                 setParameter(2, apellidos).getResultList();*/
         return lst;
     }
 
     @Override
-    public List<prClientes> findByClientesTop() {
-        String queryStr="SELECT p FROM prClientes p order by p.fecha_creacion,p.fecha_modificacion desc";
+    public List<PrClientes> findByClientesTop() {
+        String queryStr="SELECT p FROM PrClientes p order by p.fecha_creacion,p.fecha_modificacion desc";
         Query query= em.createQuery(queryStr).setMaxResults(25);
-        List<prClientes> lst=query.getResultList();
+        List<PrClientes> lst=query.getResultList();
         return lst;
     }
 
     @Override
-    public List<prClientes> findByCodigo(String idCliente) {
+    public List<PrClientes> findByCodigo(String idCliente) {
         //String queryStr="SELECT p FROM prClientes p WHERE p.idCliente =: idCliente";
-        Query query=em.createQuery("SELECT p FROM prClientes p WHERE p.idCliente = :idCliente");
+        Query query=em.createQuery("SELECT p FROM PrClientes p WHERE p.idCliente = :idCliente");
         query.setParameter("idCliente", idCliente);
-        List<prClientes> lst=query.getResultList();
+        List<PrClientes> lst=query.getResultList();
         return lst;
     }
 
     @Override
-    public List<prClientes> findByDui(String dui) {
-         Query query=em.createQuery("SELECT p FROM prClientes p WHERE p.dui = :dui");
+    public List<PrClientes> findByDui(String dui) {
+         Query query=em.createQuery("SELECT p FROM PrClientes p WHERE p.dui = :dui");
          query.setParameter("dui", dui);
-         List<prClientes> lst=query.getResultList();
+         List<PrClientes> lst=query.getResultList();
          return lst;
     }
     

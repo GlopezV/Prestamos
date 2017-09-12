@@ -8,14 +8,14 @@ package sv.com.prestamos.dao;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import sv.com.prestamos.modelo.prTransaccionesPrestamos;
+import sv.com.prestamos.modelo.PrTransaccionesPrestamos;
 
 /**
  *
  * @author egalvez
  */
 @Stateless
-public class TransaccionesPrestamosDaoImp extends AbstractDao<prTransaccionesPrestamos> implements TransaccionesPrestamosDao {
+public class TransaccionesPrestamosDaoImp extends AbstractDao<PrTransaccionesPrestamos> implements TransaccionesPrestamosDao {
     @PersistenceContext(unitName = "PrestamosPU")
     private EntityManager em;
 
@@ -25,7 +25,7 @@ public class TransaccionesPrestamosDaoImp extends AbstractDao<prTransaccionesPre
     }
 
     public TransaccionesPrestamosDaoImp() {
-        super(prTransaccionesPrestamos.class);
+        super(PrTransaccionesPrestamos.class);
     }
     
 }

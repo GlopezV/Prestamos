@@ -7,26 +7,26 @@ package sv.com.prestamos.dao;
 
 import java.util.List;
 import javax.ejb.Local;
-import sv.com.prestamos.modelo.prlineasPrestamos;
+import sv.com.prestamos.modelo.PrLineasPrestamos;
 
-/**
+/*
  *
  * @author egalvez
  */
 @Local
 public interface LineasPrestamosDao {
 
-    void create(prlineasPrestamos prlineasPrestamos);
+    void create(PrLineasPrestamos prlineasPrestamos);
 
-    void edit(prlineasPrestamos prlineasPrestamos);
+    void edit(PrLineasPrestamos prlineasPrestamos);
 
-    void remove(prlineasPrestamos prlineasPrestamos);
+    void remove(PrLineasPrestamos prlineasPrestamos);
 
-    prlineasPrestamos find(Object id);
+    PrLineasPrestamos find(Object id);
 
-    List<prlineasPrestamos> findAll();
+    List<PrLineasPrestamos> findAll();
 
-    List<prlineasPrestamos> findRange(int[] range);
+    List<PrLineasPrestamos> findRange(int[] range);
 
     int count();
     
