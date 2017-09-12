@@ -35,13 +35,13 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "prDetallePrestamos.findAll", query = "SELECT p FROM prDetallePrestamos p"),
     @NamedQuery(name = "prDetallePrestamos.findByIdDetPrestamo", query = "SELECT p FROM prDetallePrestamos p WHERE p.idDetPrestamo = :idDetPrestamo"),
     @NamedQuery(name = "prDetallePrestamos.findByFechaPago", query = "SELECT p FROM prDetallePrestamos p WHERE p.fechaPago = :fechaPago"),
+    @NamedQuery(name = "prDetallePrestamos.findByMontoCuota", query = "SELECT p FROM prDetallePrestamos p WHERE p.montoCuota = :montoCuota"),
     @NamedQuery(name = "prDetallePrestamos.findByMontoCapital", query = "SELECT p FROM prDetallePrestamos p WHERE p.montoCapital = :montoCapital"),
     @NamedQuery(name = "prDetallePrestamos.findByMontoInteres", query = "SELECT p FROM prDetallePrestamos p WHERE p.montoInteres = :montoInteres"),
     @NamedQuery(name = "prDetallePrestamos.findByMontoAportacion", query = "SELECT p FROM prDetallePrestamos p WHERE p.montoAportacion = :montoAportacion"),
-    @NamedQuery(name = "prDetallePrestamos.findByMontoCuota", query = "SELECT p FROM prDetallePrestamos p WHERE p.montoCuota = :montoCuota"),
-    @NamedQuery(name = "prDetallePrestamos.findByMontoOtros", query = "SELECT p FROM prDetallePrestamos p WHERE p.montoOtros = :montoOtros")})
+    @NamedQuery(name = "prDetallePrestamos.findByMontoAdmon", query = "SELECT p FROM prDetallePrestamos p WHERE p.montoAdmon = :montoAdmon")})
 public class prDetallePrestamos implements Serializable {
-    
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,29 +49,23 @@ public class prDetallePrestamos implements Serializable {
     @Size(min = 1, max = 25)
     @Column(name = "id_det_prestamo")
     private String idDetPrestamo;
-    
     @Column(name = "fecha_pago")
     @Temporal(TemporalType.DATE)
     private Date fechaPago;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "monto_capital")
-    private BigDecimal montoCapital;
-    
-    @Column(name = "monto_interes")
-    private BigDecimal montoInteres;
-    
-    @Column(name = "monto_aportacion")
-    private BigDecimal montoAportacion;
-    
     @Column(name = "monto_cuota")
     private BigDecimal montoCuota;
-    
-    @Column(name = "monto_otros")
-    private BigDecimal montoOtros;
-    
-    @ManyToOne
+    @Column(name = "monto_capital")
+    private BigDecimal montoCapital;
+    @Column(name = "monto_interes")
+    private BigDecimal montoInteres;
+    @Column(name = "monto_aportacion")
+    private BigDecimal montoAportacion;
+    @Column(name = "monto_admon")
+    private BigDecimal montoAdmon;
     @JoinColumn(name = "id_prestamo", referencedColumnName = "id_prestamo")
-    private prPrestamos Prestamo;
+    @ManyToOne
+    private prPrestamos idPrestamo;
 
     public prDetallePrestamos() {
     }
@@ -94,6 +88,14 @@ public class prDetallePrestamos implements Serializable {
 
     public void setFechaPago(Date fechaPago) {
         this.fechaPago = fechaPago;
+    }
+
+    public BigDecimal getMontoCuota() {
+        return montoCuota;
+    }
+
+    public void setMontoCuota(BigDecimal montoCuota) {
+        this.montoCuota = montoCuota;
     }
 
     public BigDecimal getMontoCapital() {
@@ -120,28 +122,20 @@ public class prDetallePrestamos implements Serializable {
         this.montoAportacion = montoAportacion;
     }
 
-    public BigDecimal getMontoCuota() {
-        return montoCuota;
+    public BigDecimal getMontoAdmon() {
+        return montoAdmon;
     }
 
-    public void setMontoCuota(BigDecimal montoCuota) {
-        this.montoCuota = montoCuota;
-    }
-
-    public BigDecimal getMontoOtros() {
-        return montoOtros;
-    }
-
-    public void setMontoOtros(BigDecimal montoOtros) {
-        this.montoOtros = montoOtros;
+    public void setMontoAdmon(BigDecimal montoAdmon) {
+        this.montoAdmon = montoAdmon;
     }
 
     public prPrestamos getIdPrestamo() {
-        return Prestamo;
+        return idPrestamo;
     }
 
-    public void setIdPrestamo(prPrestamos Prestamo) {
-        this.Prestamo = Prestamo;
+    public void setIdPrestamo(prPrestamos idPrestamo) {
+        this.idPrestamo = idPrestamo;
     }
 
     @Override

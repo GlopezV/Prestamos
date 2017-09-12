@@ -7,6 +7,7 @@ package sv.com.prestamos.modelo;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -76,19 +77,19 @@ public class prPrestamos implements Serializable {
     private String usuarioCreador;
     @Column(name = "fecha_creacion")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaCreacion;
+    private Calendar fechaCreacion;
     @Size(max = 30)
     @Column(name = "usuario_modificador")
     private String usuarioModificador;
     @Column(name = "fecha_modificacion")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaModificacion;
+    private Calendar fechaModificacion;
     @Size(max = 30)
     @Column(name = "usuario_inactivador")
     private String usuarioInactivador;
     @Column(name = "fecha_inactivacion")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaInactivacion;
+    private Calendar fechaInactivacion;
     @Column(name = "activo")
     private Boolean activo;
     @OneToMany(mappedBy = "idPrestamo")
@@ -164,11 +165,11 @@ public class prPrestamos implements Serializable {
         this.usuarioCreador = usuarioCreador;
     }
 
-    public Date getFechaCreacion() {
+    public Calendar getFechaCreacion() {
         return fechaCreacion;
     }
 
-    public void setFechaCreacion(Date fechaCreacion) {
+    public void setFechaCreacion(Calendar fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
     }
 
@@ -180,11 +181,11 @@ public class prPrestamos implements Serializable {
         this.usuarioModificador = usuarioModificador;
     }
 
-    public Date getFechaModificacion() {
+    public Calendar getFechaModificacion() {
         return fechaModificacion;
     }
 
-    public void setFechaModificacion(Date fechaModificacion) {
+    public void setFechaModificacion(Calendar fechaModificacion) {
         this.fechaModificacion = fechaModificacion;
     }
 
@@ -196,11 +197,11 @@ public class prPrestamos implements Serializable {
         this.usuarioInactivador = usuarioInactivador;
     }
 
-    public Date getFechaInactivacion() {
+    public Calendar getFechaInactivacion() {
         return fechaInactivacion;
     }
 
-    public void setFechaInactivacion(Date fechaInactivacion) {
+    public void setFechaInactivacion(Calendar fechaInactivacion) {
         this.fechaInactivacion = fechaInactivacion;
     }
 
